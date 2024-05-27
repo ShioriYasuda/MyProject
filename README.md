@@ -11,7 +11,7 @@
 - BMI計算とフィードバック
 - プロフィール管理
 - アカウント削除機能
-- 
+  
 ## スクリーンショット
 ![ログイン画面](src/main/resources/static/images/ログイン画面.png)
 ![ダッシュボード1](src/main/resources/static/images/ダッシュボード1.png)
