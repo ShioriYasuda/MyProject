@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>体重履歴</title>
+	 <link rel="stylesheet" href="/css/weightHistoryStyle.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    
+</head>
+<body>
+    <h1>体重履歴</h1>
+    <div class="controls">
+        <label for="timeframe">表示区間:</label>
+        <select id="timeframe" onchange="drawChart()">
+            <option value="7">1週間</option>
+            <option value="30">1か月</option>
+            <option value="90">3か月</option>
+            <option value="180">半年</option>
+            <option value="365">1年</option>
+        </select>
+    </div>
+    <div class="chart-container">
+        <canvas id="weightChart"></canvas>
+    </div>
+    <div class="buttons">
+        <a href="/weight" class="button">体重修正フォームへ</a>
+
+        <a href="/dashboard" class="button">ダッシュボードに戻る</a>
+    </div>
+
+     <script>
+        async function fetchWeightData(days) {
+            const response = await fetch('/api/currentUserId'); // 現在のユーザーIDを取得するAPIエンドポイント
+            const userId = await response.json();
+
+            const endDate = new Date();
+            const startDate = new Date();
+            startDate.setDate(endDate.getDate() - days);
+
+            const start = startDate.toISOString().split('T')[0];
+            const end = endDate.toISOString().split('T')[0];
+
+            console.log(`Fetching data from ${start} to ${end}`); // デバッグ用
+
+            const weightResponse = await fetch(`/api/weightHistory?userId=${userId}&startDate=${start}&endDate=${end}`);
+            const data = await weightResponse.json();
+
+            console.log('Fetched weight data:', data); // デバッグ用
+
+            return data.map(record => ({
+                date: record.date,
+                weight: record.weight
+            }));
+        }
+
+        async function fetchUserGoalWeight() {
+            const response = await fetch('/api/currentUserId'); // 現在のユーザーIDを取得するAPIエンドポイント
+            const userId = await response.json();
+
+            const goalWeightResponse = await fetch(`/api/userGoalWeight?userId=${userId}`);
+            const data = await goalWeightResponse.json();
+            return data.goalWeight;
+        }
+
+        let weightChart = null;
+
+        async function drawChart() {
+            const days = document.getElementById('timeframe').value;
+            const weightData = await fetchWeightData(days);
+            const goalWeight = await fetchUserGoalWeight();
+            const labels = weightData.map(record => record.date);
+            const weights = weightData.map(record => record.weight);
+
+            const ctx = document.getElementById('weightChart').getContext('2d');
+
+            if (weightChart) {
+                weightChart.destroy();
+            }
+
+            weightChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '体重（kg）',
+                        data: weights,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        fill: false,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day',
+                                tooltipFormat: 'yyyy-MM-dd'
+                            },
+                            title: {
+                                display: true,
+                                text: '日付'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: '体重（kg）'
+                            }
+                        }
+                    },
+                    plugins: {
+                        annotation: {
+                            annotations: {
+                                line1: {
+                                    type: 'line',
+                                    yMin: goalWeight,
+                                    yMax: goalWeight,
+                                    borderColor: 'red',
+                                    borderWidth: 2,
+                                    label: {
+                                        content: '目標体重',
+                                        enabled: true,
+                                        position: 'start'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', drawChart);
+    </script>
+</body>
+</html>

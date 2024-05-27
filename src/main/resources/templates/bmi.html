@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>体重管理サービス - BMI計算</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bmiStyle.css}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <a href="/dashboard" class="dashboard-button">ダッシュボードへ戻る</a>
+    </div>
+    <div class="container">
+        <header>
+            <h1>BMI計算</h1>
+        </header>
+        <main>
+            <form th:action="@{/bmi}" method="post">
+                <label for="height">身長（cm）：</label>
+                <input type="number" id="height" name="height" step="0.1" value="160" required><br><br>
+                <label for="weight">体重（kg）：</label>
+                <input type="number" id="weight" name="weight" value="60" step="0.1" required><br><br>
+                <button type="submit">計算</button>
+            </form>
+        </main>
+    </div>
+</body>
+</html>

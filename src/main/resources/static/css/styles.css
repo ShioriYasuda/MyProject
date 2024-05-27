@@ -1,0 +1,112 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color:  #f0cfa0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative; /* 親要素を相対位置に設定 */
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* テキスト中央揃え */
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input[type="text"], input[type="number"], input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* ボタンのデザインをモダンに */
+button {
+    background-color: #4CAF50; /* 明るい緑色に変更 */
+    color: white;
+    padding: 12px 20px;
+    border-radius: 20px; /* 角を丸く */
+    box-shadow: 0 4px #999; /* 陰影を付ける */
+    cursor: pointer; /* カーソルをポインタに変更 */
+    text-decoration: none; /* リンクの下線を消す */
+    display: inline-block; /* ブロック要素にする */
+}
+
+button:hover {
+    background-color: #45a049; /* ホバー時の色変更 */
+    box-shadow: 0 5px #666; /* ホバー時の陰影を強調 */
+    transform: translateY(-2px); /* 軽く持ち上げる効果 */
+}
+
+.dashboard-container {
+    position: absolute;
+    top: 20px; /* 上からの位置 */
+    right: 20px; /* 右からの位置 */
+}
+
+.dashboard-button {
+    padding: 10px 20px;
+    background-color: #f44336;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.dashboard-button:hover {
+    background-color: #d32f2f;
+}
+
+.elephant-img {
+    width: 200px; /* 幅を200ピクセルに */
+    display: block; /* ブロックレベルで中央に */
+    margin: 20px auto; /* 上下のマージンを加えて中央配置 */
+}
+
+p {
+    font-size: 16px; /* フォントサイズを適切に設定 */
+    color: #333; /* 読みやすい色 */
+    padding: 10px 0; /* 上下のパディングで余白を確保 */
+}
+
+/* プロファイル編集ボタンのスタイル */
+.edit-profile-button {
+    background-color: #4CAF50; 
+    color: white;
+    padding: 12px 20px;
+    border-radius: 20px; /* 角を丸く */
+    box-shadow: 0 4px #999; /* 陰影を付ける */
+    cursor: pointer; /* カーソルをポインタに変更 */
+    text-decoration: none; /* リンクの下線を消す */
+    display: inline-block; /* ブロック要素にする */
+    margin-top: 20px; /* 上部のマージンを追加 */
+}
+
+.edit-profile-button:hover {
+    background-color: #45a049; /* ホバー時の色変更 */
+    box-shadow: 0 5px #666; /* ホバー時の陰影を強調 */
+    transform: translateY(-2px); /* 軽く持ち上げる効果 */
+}
+
+.edit-profile-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
