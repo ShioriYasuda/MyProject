@@ -1,5 +1,6 @@
 package jp.eightbit.exam.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,6 +18,10 @@ public class User {
 
     @Column(nullable = false)
     private String role;
+
+    @OneToOne(mappedBy = "user")
+    @JsonIgnore
+    private UserProfile userProfile;
 
     // Getters and setters
     public Long getId() {
@@ -49,5 +54,13 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
     }
 }

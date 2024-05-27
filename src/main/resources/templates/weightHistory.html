@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>体重履歴</title>
-	 <link rel="stylesheet" href="/css/weightHistoryStyle.css">
+    <link rel="stylesheet" href="/css/weightHistoryStyle.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
-    
 </head>
 <body>
     <h1>体重履歴</h1>
+    <div class="messages">
+        <p th:text="${goalMessage}"></p>
+        <p th:text="${bmiMessage}"></p>
+    </div>
     <div class="controls">
         <label for="timeframe">表示区間:</label>
         <select id="timeframe" onchange="drawChart()">
@@ -26,11 +29,10 @@
     </div>
     <div class="buttons">
         <a href="/weight" class="button">体重修正フォームへ</a>
-
         <a href="/dashboard" class="button">ダッシュボードに戻る</a>
     </div>
 
-     <script>
+    <script>
         async function fetchWeightData(days) {
             const response = await fetch('/api/currentUserId'); // 現在のユーザーIDを取得するAPIエンドポイント
             const userId = await response.json();
@@ -45,14 +47,20 @@
             console.log(`Fetching data from ${start} to ${end}`); // デバッグ用
 
             const weightResponse = await fetch(`/api/weightHistory?userId=${userId}&startDate=${start}&endDate=${end}`);
-            const data = await weightResponse.json();
+            const textData = await weightResponse.text(); // JSONとして解析する前に生のテキストを取得
+            console.log('Fetched weight data (raw):', textData); // デバッグ用
 
-            console.log('Fetched weight data:', data); // デバッグ用
-
-            return data.map(record => ({
-                date: record.date,
-                weight: record.weight
-            }));
+            try {
+                const data = JSON.parse(textData); // JSON解析
+                console.log('Fetched weight data (parsed):', data); // デバッグ用
+                return data.map(record => ({
+                    date: record.date,
+                    weight: record.weight
+                }));
+            } catch (e) {
+                console.error('Error parsing JSON:', e); // エラーが発生した場合のログ
+                return [];
+            }
         }
 
         async function fetchUserGoalWeight() {

@@ -1,8 +1,6 @@
-/* weightHistoryStyle.css */
-
 body {
     font-family: Arial, sans-serif;
-    background-color:  #f0cfa0;
+    background-color: #f0cfa0;
     margin: 0;
     padding: 0;
 }
@@ -75,27 +73,39 @@ h1 {
 .controls a.button:hover {
     background-color: #2980b9;
 }
-  .chart-container {
-            width: 80%;
-            margin: auto;
-        }
-        .controls {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .buttons {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 10px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .button:hover {
-            background-color: #0056b3;
-        }
+
+.chart-container {
+    width: 80%;
+    margin: auto;
+}
+
+.controls {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.messages {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+}

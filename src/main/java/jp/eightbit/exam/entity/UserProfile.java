@@ -2,10 +2,8 @@ package jp.eightbit.exam.entity;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -16,7 +14,6 @@ public class UserProfile {
     private Long id;
 
     @Column(name = "birth_date", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthDate;  // 誕生日フィールド
 
     @Column(nullable = false)
@@ -25,8 +22,9 @@ public class UserProfile {
     @Column(nullable = false)
     private double goalWeight; // in kg
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
     // Constructor
@@ -48,7 +46,7 @@ public class UserProfile {
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
-    
+
     public int getAge() {
         if (birthDate == null) {
             return 0;
@@ -79,11 +77,5 @@ public class UserProfile {
 
     public void setUser(User user) {
         this.user = user;
-    }
-    
-    //誕生日が今日かどうかチェック
-    public boolean isBirthday() {
-        LocalDate today = LocalDate.now();
-        return birthDate.getMonth() == today.getMonth() && birthDate.getDayOfMonth() == today.getDayOfMonth();
     }
 }

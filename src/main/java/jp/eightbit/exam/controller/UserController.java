@@ -2,7 +2,11 @@ package jp.eightbit.exam.controller;
 
 import jp.eightbit.exam.entity.User;
 import jp.eightbit.exam.repository.UserRepository;
+import jp.eightbit.exam.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,6 +26,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
@@ -64,4 +71,15 @@ public class UserController {
     //     return "dashboard";
     // }
 
+    @PostMapping("/deleteAccount")
+    public ResponseEntity<String> deleteAccount(@AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.findByUsername(userDetails.getUsername());
+        if (user != null) {
+            userService.deleteUser(user);
+            return ResponseEntity.ok("Account deleted successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
+    
 }

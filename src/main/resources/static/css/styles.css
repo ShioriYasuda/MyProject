@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color:  #f0cfa0;
+    background-color: #f0cfa0;
     margin: 0;
     padding: 0;
     display: flex;
@@ -37,7 +37,7 @@ input[type="text"], input[type="number"], input[type="file"] {
 }
 
 /* ボタンのデザインをモダンに */
-button {
+button, .edit-profile-button, .delete-profile-button {
     background-color: #4CAF50; /* 明るい緑色に変更 */
     color: white;
     padding: 12px 20px;
@@ -46,9 +46,10 @@ button {
     cursor: pointer; /* カーソルをポインタに変更 */
     text-decoration: none; /* リンクの下線を消す */
     display: inline-block; /* ブロック要素にする */
+    margin: 10px 0; /* 上下のマージンを追加 */
 }
 
-button:hover {
+button:hover, .edit-profile-button:hover, .delete-profile-button:hover {
     background-color: #45a049; /* ホバー時の色変更 */
     box-shadow: 0 5px #666; /* ホバー時の陰影を強調 */
     transform: translateY(-2px); /* 軽く持ち上げる効果 */
@@ -86,27 +87,17 @@ p {
 }
 
 /* プロファイル編集ボタンのスタイル */
-.edit-profile-button {
-    background-color: #4CAF50; 
-    color: white;
-    padding: 12px 20px;
-    border-radius: 20px; /* 角を丸く */
-    box-shadow: 0 4px #999; /* 陰影を付ける */
-    cursor: pointer; /* カーソルをポインタに変更 */
-    text-decoration: none; /* リンクの下線を消す */
-    display: inline-block; /* ブロック要素にする */
-    margin-top: 20px; /* 上部のマージンを追加 */
-}
-
-.edit-profile-button:hover {
-    background-color: #45a049; /* ホバー時の色変更 */
-    box-shadow: 0 5px #666; /* ホバー時の陰影を強調 */
-    transform: translateY(-2px); /* 軽く持ち上げる効果 */
-}
-
 .edit-profile-button-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* 縦に並べる */
+    align-items: center;
     margin-top: 20px;
 }
 
+.delete-profile-button {
+    background-color: #e74c3c; /* 明るい赤色に変更 */
+}
+
+.delete-profile-button:hover {
+    background-color: #c0392b; /* ホバー時の色変更 */
+}

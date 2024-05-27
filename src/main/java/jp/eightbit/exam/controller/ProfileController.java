@@ -78,4 +78,10 @@ public class ProfileController {
         return new ModelAndView("dashboard", model);
     }
 
+    @PostMapping("/deleteProfile")
+    public String deleteProfile(@AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.findByUsername(userDetails.getUsername());
+        userService.deleteUser(user);
+        return "redirect:/login?logout";  // 削除後にログインページにリダイレクト
+    }
 }
