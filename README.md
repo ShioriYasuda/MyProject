@@ -13,9 +13,14 @@
 - アカウント削除機能
   
 ## スクリーンショット
+ログイン画面
 ![ログイン画面](src/main/resources/static/images/ログイン画面.png)
+
+ダッシュボード
 ![ダッシュボード1](src/main/resources/static/images/ダッシュボード1.png)
 ![ダッシュボード2](src/main/resources/static/images/ダッシュボード2.png)
+
+体重履歴
 ![体重履歴](src/main/resources/static/images/体重履歴.png)
 
 # データベースの設定
