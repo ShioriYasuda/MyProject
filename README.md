@@ -20,6 +20,11 @@
 
 # データベースの設定
 以下のSQLスクリプトを使用して、データベースと必要なテーブルを作成します。
+## データベースの設定
+
+以下のSQLスクリプトを使用して、データベースと必要なテーブルを作成します。
+
+```sql
 CREATE DATABASE weight_tracker;
 
 USE weight_tracker;
@@ -47,6 +52,7 @@ CREATE TABLE weight_records (
     weight FLOAT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
 
 
 ## インストール手順
