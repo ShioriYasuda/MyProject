@@ -18,6 +18,37 @@
 ![ダッシュボード2](src/main/resources/static/images/ダッシュボード2.png)
 ![体重履歴](src/main/resources/static/images/体重履歴.png)
 
+# データベースの設定
+以下のSQLスクリプトを使用して、データベースと必要なテーブルを作成します。
+CREATE DATABASE weight_tracker;
+
+USE weight_tracker;
+
+CREATE TABLE users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE user_profiles (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    goal_weight DOUBLE NOT NULL,
+    height DOUBLE NOT NULL,
+    birth_date DATE NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE weight_records (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    date DATE NOT NULL,
+    weight FLOAT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+
 ## インストール手順
 1. リポジトリをクローンします:
    git clone https://github.com/ShioriYasuda/MyProject.git
