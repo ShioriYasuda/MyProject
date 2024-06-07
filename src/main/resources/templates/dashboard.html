@@ -26,7 +26,7 @@
                 <button type="submit">記録</button>
             </form>
             <div class="elephant-message">
-                <img id="elephant-img" src="images/へるぞうデフォルト.png" alt="ゾウのイラスト" class="elephant-img">
+                <img id="elephant-img" th:src="@{/images/へるぞうデフォルト.png}" alt="ゾウのイラスト" class="elephant-img">
                 <p class="message" th:text="${birthdayMessage != null ? birthdayMessage : defaultMessage}">ここにメッセージが表示されます</p>
             </div>
         </main>

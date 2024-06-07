@@ -15,7 +15,7 @@
             <p th:text="'あなたのBMIは ' + ${bmi} + ' です。'"></p>
             <p th:text="${message}"></p>
         </main>
-         <img src="images/へるぞう挨拶.png" alt="ゾウのイラスト" class="elephant-img">
+         <img th:src="@{/images/へるぞう挨拶.png}" alt="ゾウのイラスト" class="elephant-img">
         <footer>
              <a th:href="@{/bmi}" class="button">再計算</a>
             <a th:href="@{/dashboard}" class="button">ダッシュボードへ戻る</a>
