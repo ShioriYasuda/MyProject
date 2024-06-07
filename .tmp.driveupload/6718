@@ -1,0 +1,108 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color:  #f0cfa0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative; /* 親要素を相対位置に設定 */
+}
+
+.container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    padding: 20px;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+form {
+    margin-top: 20px;
+}
+
+label {
+    font-size: 16px;
+    color: #333;
+}
+
+input[type="number"] {
+    width: 80%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button[type="submit"] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.footer {
+    margin-top: 20px;
+}
+
+.button {
+    display: block;
+    margin: 10px 0;
+    padding: 10px 0;
+    background-color: #007BFF;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+#bmi-result, #bmi-message {
+    font-size: 16px;
+    color: #333;
+    margin-top: 20px;
+}
+.dashboard-container {
+    position: absolute;
+    top: 20px; /* 上からの位置 */
+    right: 20px; /* 右からの位置 */
+}
+
+.dashboard-button {
+    padding: 10px 20px;
+    background-color: #f44336;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.dashboard-button:hover {
+    background-color: #d32f2f;
+}
+
+.elephant-img {
+    width: 310px;
+    height: auto;
+}
