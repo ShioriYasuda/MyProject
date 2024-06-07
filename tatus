@@ -1,0 +1,60 @@
+[33mcommit aed49b7fe283b3612f501534b4d9badb7912a71f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Shiori　Yasuda <taroupaka@gmail.com>
+Date:   Tue May 28 13:31:20 2024 +0900
+
+    Update README.md
+
+[33mcommit 946795c9feedd00676f3e3fa6af75b74433ff8d1[m
+Author: Shiori　Yasuda <taroupaka@gmail.com>
+Date:   Tue May 28 10:47:07 2024 +0900
+
+    Update README.md
+
+[33mcommit 2767a0a3acb031bfc4702f0b58f523a8d2d5b7ee[m
+Author: Shiori　Yasuda <taroupaka@gmail.com>
+Date:   Tue May 28 10:44:41 2024 +0900
+
+    Update README.md
+
+[33mcommit 2569c9ee38463bd5ddd8b939e9004d21ff5409fe[m
+Author: Shiori　Yasuda <taroupaka@gmail.com>
+Date:   Mon May 27 17:51:52 2024 +0900
+
+    Update README.md
+
+[33mcommit 286fea9a5b48c37eda06281bef5edabd70bd2701[m
+Author: Shiori　Yasuda <taroupaka@gmail.com>
+Date:   Mon May 27 17:40:22 2024 +0900
+
+    Update README.md
+
+[33mcommit e5e2cd921f04387174f3c67d59942ebed2a5385d[m
+Author: Shiori Yasuda <taroupaka@gmail.com>
+Date:   Mon May 27 17:23:29 2024 +0900
+
+    画像追加
+
+[33mcommit ce320bf62edd5b90440ad4d74889bde83f9a1a13[m
+Author: Shiori Yasuda <taroupaka@gmail.com>
+Date:   Mon May 27 12:41:44 2024 +0900
+
+    ユーザー削除機能追加
+
+[33mcommit cf72ed5036d060f15e7b80e4132e935ff1e3e3c0[m
+Merge: 89b734c 3ac44de
+Author: Shiori Yasuda <taroupaka@gmail.com>
+Date:   Mon May 27 11:14:57 2024 +0900
+
+    Resolve merge conflict in .gitignore
+
+[33mcommit 89b734cca0c41d6f4ebf73d772381b21deda2cd3[m
+Author: Shiori Yasuda <taroupaka@gmail.com>
+Date:   Mon May 27 10:46:30 2024 +0900
+
+    Initial commit
+
+[33mcommit 3ac44dedf0d30dceee791db161362711f30d4acb[m
+Author: pakatarou <taroupaka@gmail.com>
+Date:   Fri May 24 09:44:13 2024 +0900
+
+    Initial commit
