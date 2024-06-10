@@ -32,9 +32,11 @@
         <a th:href="@{/dashboard}" class="button">ダッシュボードに戻る</a>
     </div>
 
-    <script>
-        async function fetchWeightData(days) {
-            const response = await fetch('/api/currentUserId'); // 現在のユーザーIDを取得するAPIエンドポイント
+   <script>
+    async function fetchWeightData(days) {
+        try {
+            const response = await fetch('/calApp/api/currentUserId');
+            if (!response.ok) throw new Error(`Failed to fetch user ID: ${response.status} ${response.statusText}`);
             const userId = await response.json();
 
             const endDate = new Date();
@@ -44,105 +46,126 @@
             const start = startDate.toISOString().split('T')[0];
             const end = endDate.toISOString().split('T')[0];
 
-            console.log(`Fetching data from ${start} to ${end}`); // デバッグ用
-
-            const weightResponse = await fetch(`/api/weightHistory?userId=${userId}&startDate=${start}&endDate=${end}`);
-            const textData = await weightResponse.text(); // JSONとして解析する前に生のテキストを取得
-            console.log('Fetched weight data (raw):', textData); // デバッグ用
+            const weightResponse = await fetch(`/calApp/api/weightHistory?userId=${userId}&startDate=${start}&endDate=${end}`);
+            if (!weightResponse.ok) throw new Error(`Failed to fetch weight history: ${weightResponse.status} ${weightResponse.statusText}`);
+            const textData = await weightResponse.text();
 
             try {
-                const data = JSON.parse(textData); // JSON解析
-                console.log('Fetched weight data (parsed):', data); // デバッグ用
+                const data = JSON.parse(textData);
+                console.log('Fetched weight data:', data);
+                if (!Array.isArray(data)) {
+                    throw new Error('Data is not an array');
+                }
                 return data.map(record => ({
                     date: record.date,
                     weight: record.weight
                 }));
             } catch (e) {
-                console.error('Error parsing JSON:', e); // エラーが発生した場合のログ
+                console.error('Error parsing JSON:', e);
                 return [];
             }
+        } catch (error) {
+            console.error('Fetch error:', error);
+            return [];
         }
+    }
 
-        async function fetchUserGoalWeight() {
-            const response = await fetch('/api/currentUserId'); // 現在のユーザーIDを取得するAPIエンドポイント
+    async function fetchUserGoalWeight() {
+        try {
+            const response = await fetch('/calApp/api/currentUserId');
+            if (!response.ok) throw new Error(`Failed to fetch user ID: ${response.status} ${response.statusText}`);
             const userId = await response.json();
 
-            const goalWeightResponse = await fetch(`/api/userGoalWeight?userId=${userId}`);
+            const goalWeightResponse = await fetch(`/calApp/api/userGoalWeight?userId=${userId}`);
+            if (!goalWeightResponse.ok) throw new Error(`Failed to fetch goal weight: ${goalWeightResponse.status} ${goalWeightResponse.statusText}`);
             const data = await goalWeightResponse.json();
+            if (typeof data.goalWeight !== 'number') {
+                throw new Error('Goal weight is not a number');
+            }
             return data.goalWeight;
+        } catch (error) {
+            console.error('Fetch error:', error);
+            return null;
+        }
+    }
+
+    let weightChart = null;
+
+    async function drawChart() {
+        const days = document.getElementById('timeframe').value;
+        const weightData = await fetchWeightData(days);
+        const goalWeight = await fetchUserGoalWeight();
+        if (goalWeight === null) {
+            console.error('Failed to fetch goal weight.');
+            return;
         }
 
-        let weightChart = null;
+        const labels = weightData.map(record => record.date);
+        const weights = weightData.map(record => record.weight);
 
-        async function drawChart() {
-            const days = document.getElementById('timeframe').value;
-            const weightData = await fetchWeightData(days);
-            const goalWeight = await fetchUserGoalWeight();
-            const labels = weightData.map(record => record.date);
-            const weights = weightData.map(record => record.weight);
+        const ctx = document.getElementById('weightChart').getContext('2d');
 
-            const ctx = document.getElementById('weightChart').getContext('2d');
+        if (weightChart) {
+            weightChart.destroy();
+        }
 
-            if (weightChart) {
-                weightChart.destroy();
-            }
-
-            weightChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: '体重（kg）',
-                        data: weights,
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        fill: false,
-                        tension: 0.1
-                    }]
-                },
-                options: {
-                    scales: {
-                        x: {
-                            type: 'time',
-                            time: {
-                                unit: 'day',
-                                tooltipFormat: 'yyyy-MM-dd'
-                            },
-                            title: {
-                                display: true,
-                                text: '日付'
-                            }
+        weightChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '体重（kg）',
+                    data: weights,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: false,
+                    tension: 0.1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'day',
+                            tooltipFormat: 'yyyy-MM-dd'
                         },
-                        y: {
-                            title: {
-                                display: true,
-                                text: '体重（kg）'
-                            }
+                        title: {
+                            display: true,
+                            text: '日付'
                         }
                     },
-                    plugins: {
-                        annotation: {
-                            annotations: {
-                                line1: {
-                                    type: 'line',
-                                    yMin: goalWeight,
-                                    yMax: goalWeight,
-                                    borderColor: 'red',
-                                    borderWidth: 2,
-                                    label: {
-                                        content: '目標体重',
-                                        enabled: true,
-                                        position: 'start'
-                                    }
+                    y: {
+                        title: {
+                            display: true,
+                            text: '体重（kg）'
+                        }
+                    }
+                },
+                plugins: {
+                    annotation: {
+                        annotations: {
+                            line1: {
+                                type: 'line',
+                                yMin: goalWeight,
+                                yMax: goalWeight,
+                                borderColor: 'red',
+                                borderWidth: 2,
+                                label: {
+                                    content: '目標体重',
+                                    enabled: true,
+                                    position: 'start'
                                 }
                             }
                         }
                     }
                 }
-            });
-        }
+            }
+        });
+    }
 
-        document.addEventListener('DOMContentLoaded', drawChart);
-    </script>
+    document.addEventListener('DOMContentLoaded', drawChart);
+</script>
+
 </body>
 </html>
